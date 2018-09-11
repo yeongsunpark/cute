@@ -30,9 +30,9 @@ def rex_str(para):
     return m.group(1)
 
 
-f = open("/home/msl/data/mrc/ko_kakao/전달용-1(c71까지)(14828)_수정(k2) - 시트1의 사본.tsv", "r")
+f = open("/home/msl/data/mrc/ko_kakao/전달용-4(8469)(k8),5(5351)(k9)k8.tsv", "r")
 # f2 = open("/home/msl/data/mrc/ko_kakao/result.tsv", "w")
-f2 = open("/home/msl/data/mrc/ko_kakao/k2_a_wh.tsv", 'w', encoding='utf-8', newline='')
+f2 = open("/home/msl/data/mrc/ko_kakao/k8_d_wh.tsv", 'w', encoding='utf-8', newline='')
 wr = csv.writer(f2, delimiter = '\t')
 
 wr.writerow(["c_id", "title", "context", "q_id", "q1", "q2", "answer", "wh", "cate"])

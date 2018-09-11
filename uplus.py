@@ -8,8 +8,8 @@ import re
 
 class abc():
     def __init__(self):
-        self.f = 'uplus3.tsv'
-        # self.f2 = open('uplus3_result.txt', 'w')
+        self.f = 'data/uplus3.tsv'
+        self.f2 = open('uplus3_result.txt', 'w')
         self.data = []
 
     def ab(self):
@@ -84,6 +84,6 @@ class abc():
         return ()
 if __name__ == "__main__":
     a = abc()
-    # b = a.ab()
+    b = a.ab()
     c = a.abcd(b)  # b의 결과 값인 item 수를 c에 넣어준다.
     # d = a.abcde()
