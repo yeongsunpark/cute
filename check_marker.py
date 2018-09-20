@@ -7,8 +7,8 @@ import sys
 
 class extract():
     def __init__(self):
-        self.f = open('data/ko_mrc_v3.txt', 'r')
-        self.f2 = open('data/ko_mrc_v3_result.txt', 'w')
+        self.f = open('sum_txt_2차전달 - 시트5의 사본 (1).tsv', 'r')
+        self.f2 = open('sum_txt_2차전달_result.txt', 'w')
         self.data = []
 
     def f_write(self):
@@ -20,6 +20,7 @@ class extract():
                 answer = item[6]
                 # answer = answer.replace('"','')
                 answer = answer.strip('"')
+                # answer = answer
                 if "|||||{}|||||".format(answer) in content:
                     content = content.replace("|||||{}|||||".format(answer), "$$$$${}$$$$$".format(answer))
                     # self.f2.write(content)

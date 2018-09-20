@@ -6,12 +6,15 @@ import re
 
 sys.path.insert(0,'..')
 
-input_dir = "/home/msl/ys/cute/data"
+input_dir = "/home/msl/ys/cute/data2"
 output_dir = "/home/msl/ys/cute/output"
 
 aa = re.compile('제\d+장')  #
+aaa = re.compile('[ ]{8}제\d+장')  #
 bb = re.compile('제\d+절')  #
+bbb = re.compile('[ ]{8}제\d+절')
 cc = re.compile('제\d+조')  #
+ccc = re.compile('[ ]{8}제\d+조')
 dd = re.compile('부칙')
 # 하기 전에 txt 파일이 utf-8로 인코딩이 되어 있나 꼭 확인하기!
 # utf-8 파일은 제일 윗 줄을 제대로 인식을 못하니 한 줄 띄기!
@@ -24,24 +27,25 @@ previous_lvl = -1
 current_lvl = -1
 content_flag = False
 
-
-
-
 for f in os.listdir(input_dir):
     with open(os.path.join(input_dir, f), "r") as f:
     # with open("test.txt", "r") as f:
         data = []
-        temp_datas = [['' for _ in range(2)] for _ in range(3)]
+        temp_datas = [['' for _ in range(2)] for _ in range(3)]  # [['', ''], ['', ''], ['', '']]
+        long_title = f.readline().replace("\n", "")
         for line in f:
             line = line.replace("\n", "<br>")
-            if aa.match(line) or dd.match(line):
+            if aa.match(line) or dd.match(line) or aaa.match(line):
                 current_lvl = 0
-            elif bb.match(line):
+            elif bb.match(line) or bbb.match(line):
                 current_lvl = 1
-            elif cc.match(line):
+            elif cc.match(line) or ccc.match(line):
                 current_lvl = 2
             else:
                 content_flag = True
+
+            if aaa.match(line) or bbb.match(line) or ccc.match(line):
+                line = line.replace("        ", "")
 
             if content_flag:  # 내용 부분에 관한 내용입니다.
                 if temp_datas[current_lvl][1] == '':
@@ -63,10 +67,12 @@ for f in os.listdir(input_dir):
                     # print (temp_datas[i][0], ":", temp_datas[i][1])
                     temp_datas[i] = ['', '']  # 이건 또 뭘까. 근데 이걸 안 쓰면 내용이 있어야 하는 부분에 내용이 없는 문장이 만들어짐.
                     # temp_datas[i] = ['', ''] 새로 시작하게 될 때 이걸 안 쓰면 위에 있는 내용이 남아 있음. 지워주는 역할을 한다.
+            # data.append('\t'.join(['\t'.join(temp_data) for temp_data in temp_datas]))
+            temp_datas[0][0] = long_title
             data.append('\t'.join(['\t'.join(temp_data) for temp_data in temp_datas]))
             previous_lvl = current_lvl
             content_flag = False
     with open(os.path.join(output_dir, "result_{}".format(f.name.split("/")[-1])), "w", encoding='utf8') as f2:
         # with open(os.path.join(input_dir, "result_1.txt"), "w", encoding='utf8') as f2:
-        print (f.name.split("/")[-1])
+        # print (f.name.split("/")[-1])
         f2.write('\n'.join(data))
