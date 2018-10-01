@@ -4,16 +4,24 @@
 import sys, os
 import re
 import csv
+import json
 
 sys.path.insert(0,'..')
 
-input_dir = "/home/msl/ys/cute/law/"
-output_dir = "/home/msl/ys/cute/law/final4.txt"
-f2 = open(output_dir, 'w', encoding='utf-8', newline='')
+# input_dir = "/home/msl/ys/cute/law/"
+# output_dir = "/home/msl/ys/cute/law/final4.txt"
+json_data = open("/home/msl/ys/cute/law/law_parser.json", "r")
+d = json_data.read()
+d = json.loads(d)
+input_file = d['txt_all_save']['output_file']
+output_file = d['law_pre']['output']
+json_data.close()
+
+f2 = open(output_file, 'w', encoding='utf-8', newline='')
 wr = csv.writer(f2, delimiter='\t')
 
-title_index = 343
-context_index = 14612
+title_index = d['law_pre']['title_index']
+context_index = d['law_pre']['context_index']
 
 p = re.compile('<br>')
 revision = re.compile(# '<개정 *\d+[.] *\d+[.] *\d+[.][,] *\d+[.] *\d+[.] \d*[.]>|'
@@ -33,8 +41,8 @@ revision = re.compile(# '<개정 *\d+[.] *\d+[.] *\d+[.][,] *\d+[.] *\d+[.] \d*[
                       '[[]법률 제\d+호[(]\d+[.] *\d+[.] *\d+[.][)].*규정에 의하여 .*\d일까지 유효함]|'
                       '<단서 생략>')
 
-pre_title = "환경오염피해 배상책임 및 구제에 관한 법률 ( 약칭: 환경오염피해구제법 )"
-with open(os.path.join(input_dir, "finish4.txt"), "r") as f:
+pre_title = ""
+with open(os.path.join(input_file), "r") as f:
     for line in f:
         line = p.sub('', line)
         line = line.replace('  ', ' ')

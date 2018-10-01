@@ -3,11 +3,21 @@
 
 import sys, os
 import re
+import json
 
 sys.path.insert(0,'..')
 
-input_dir = "/home/msl/ys/cute/law/data4"
-output_dir = "/home/msl/ys/cute/law/data4_out"
+# input_dir = "/home/msl/ys/cute/law/data4"
+# output_dir = "/home/msl/ys/cute/law/data4_out"
+
+json_data = open("/home/msl/ys/cute/law/law_parser.json", "r")
+d = json_data.read()
+d = json.loads(d)
+input_dir = d['doc2text_2']['input_dir']
+output_dir = d['doc2text_2']['output_dir']
+json_data.close()
+
+
 
 aa = re.compile('제\d+장')  #
 aaa = re.compile('[ ]{8}제\d+장')  #
@@ -75,4 +85,4 @@ for f in os.listdir(input_dir):
     with open(os.path.join(output_dir, "result_{}".format(f.name.split("/")[-1])), "w", encoding='utf8') as f2:
         # with open(os.path.join(input_dir, "result_1.txt"), "w", encoding='utf8') as f2:
         # print (f.name.split("/")[-1])
-        f2.write('\n'.join(data))
+        f2.write('\n'.join(data))  # 이 과정을 거치면 제목 - 장 - 절 - 조 이런 형식으로 조 별로 쭉쭉쭉 적힘.

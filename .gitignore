@@ -7,3 +7,7 @@ db.sqlite3
 .DS_Store
 data/
 *.txt
+*.doc
+law/data2/
+law/data4/
+law/data4_out/
