@@ -1,0 +1,13 @@
+{
+  "doc2text_2":
+  {"input_dir":"/home/msl/ys/cute/law/data5",
+    "output_dir":"/home/msl/ys/cute/law/data5_out"
+  },
+  "txt_all_save":
+  {"output_file":"/home/msl/ys/cute/law/finish5.txt"
+  },
+  "law_pre":
+  {"output":"/home/msl/ys/cute/law/final5.txt",
+  "title_index":447,
+  "context_index":20266}
+}
