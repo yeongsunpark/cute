@@ -8,6 +8,7 @@ db.sqlite3
 data/
 *.txt
 *.doc
+*.tsv
 law/data2/
 law/data4/
 law/data4_out/
