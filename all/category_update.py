@@ -62,12 +62,12 @@ class SquadDb():
                 cate3 = data[i][7]
                 self.cur.execute(update_memo_sql, (cate1, cate2, cate3, q_id, c_id))
                 self.con.commit()
-                # print "update success"
+                # print ("update success")
             except:
-                print "try"
+                print ("try")
 
     def insert_data(self):
-        print 'insert start'
+        print ('insert start')
         f = open("q_id_6(category_error).tsv", 'r')
         data = csv.reader(f, delimiter='\t')
         data = list(data)
@@ -79,18 +79,18 @@ class SquadDb():
                 self.cur.execute(insert_memo_sql, (205, after, before, datetime.now()))
                 self.con.commit()
             except:
-                print "try again"
+                print ("try again")
 
     def count_data(self):
-        print 'count start'
+        print ('count start')
         try:
             count_memo_sql = 'select count(*) from ys_all_qna'
             self.cur.execute(count_memo_sql)
             select_count_row = self.cur.fetchall()
-            print select_count_row
+            print (select_count_row)
             self.con.commit()
         except:
-            print "cannnot user_information"
+            print ("cannnot user_information")
 
 if __name__ == "__main__":
     j = SquadDb()

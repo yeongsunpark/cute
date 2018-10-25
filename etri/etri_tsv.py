@@ -1,8 +1,8 @@
 import csv
 import json
 
-read_json_path = '/home/msl/data/mrc/ko_law_rmbr/ko_mrc_v1_squad.json'
-write_txt_path = 'etri_law_1_rmbr.tsv'
+read_json_path = '/home/msl/data/mrc/ko_wiki3/ko_mrc_v2_squad_pretty.json'
+write_txt_path = 'etri_wiki_20_v2.tsv'
 
 with open(read_json_path, 'r', encoding = 'utf-8') as f1:
     json_data1 = json.load(f1)
