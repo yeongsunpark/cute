@@ -1,6 +1,6 @@
 import json
-read_json_path = '/home/msl/data/mrc/ko_cv/ko_mrc_v16_squad_pretty.json'
-write_txt_path = 'etri.txt'
+read_json_path = '/home/msl/data/mrc/ko_wiki3/ko_mrc_v2_squad_pretty.json'
+write_txt_path = 'etri_ys.txt'
 
 with open(read_json_path, 'r', encoding = 'utf-8') as f1:
     json_data1 = json.load(f1)

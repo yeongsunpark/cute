@@ -2,13 +2,13 @@ import csv
 import json
 
 read_json_path = '/home/msl/data/mrc/ko_wiki3/ko_mrc_v2_squad_pretty.json'
-write_txt_path = 'etri_wiki_20_v2.tsv'
+write_txt_path = 'etri_wiki_20_v2_ys.tsv'
 
 with open(read_json_path, 'r', encoding = 'utf-8') as f1:
     json_data1 = json.load(f1)
 
 f2 = open(write_txt_path, 'w', encoding='utf-8', newline='')
-wr = csv.writer(f2, delimiter = '\t')
+wr = csv.writer(f2, delimiter = '\t', quoting=csv.QUOTE_NONE, quotechar='')
 
 wr.writerow(["version", "", "", "", "", "1"])
 wr.writerow(["creator", "", "", "", "", "mindslab"])
@@ -21,6 +21,8 @@ for doc in json_data1['data']:
 
         content = p['context']
         wr.writerow(["","paragraphs"])
+        # print(content)
+        # break
         wr.writerow(["", "", "context", "", "", content])
         wr.writerow(["", "", "context_en"])
         wr.writerow(["", "", "context_tagged"])

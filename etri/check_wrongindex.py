@@ -1,4 +1,4 @@
-f = open("etri_wiki_20_md.tsv", "r")
+f = open("etri_wiki_20_v2_ys.tsv", "r")
 f2 = open("etri_wrong.txt", "w")
 
 context = ""
