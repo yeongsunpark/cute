@@ -2,7 +2,7 @@ f1 = open("not_used.txt", "r")
 lst = set()
 for i in f1:
     lst.add(i.strip())
-print len(lst)
+print (len(lst))
 f1.close()
 f2 = open("not_used_chunk_moon.txt", "w")
 
