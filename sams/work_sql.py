@@ -1,10 +1,14 @@
 import os, sys
 import pymysql
-import csv
-import datetime
-import csv
+import logging
+import ys_logger
 
 sys.path.append(os.path.abspath('..'))
+
+logger = logging.getLogger('root')
+logger.setLevel("INFO")
+logger.addHandler(ys_logger.MyHandler())
+logger.info("Finish setting logger")
 
 
 class SquadDb():
@@ -16,11 +20,12 @@ class SquadDb():
         self.cur = None
         self.connect_db()
         self.f2 = open("select3.txt", "w", newline="")
-        self.q_id_1 =""
-        self.q_id_2 =""
+        self.q_id_1 = ""
+        self.q_id_2 = ""
         self.question_1 = ""
         self.question_2 = ""
         self.result_list = []
+        self.test = True
 
     def easy_mysql(self, cfg_dict, encoding='utf8', autocommit=False):
         self.con = pymysql.connect(host=cfg_dict['host'], user=cfg_dict['usr'],
@@ -39,13 +44,19 @@ class SquadDb():
             pass
 
     def select_data4(self):
-        print (datetime.datetime.now(), 'select start')
-        select_sql ='SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
+        logger.info("Start Selection")
+        if self.test is True:
+            select_sql = 'SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
+                    'FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id ' \
+                    'WHERE SUBSTRING_INDEX(q.q_id, "_", 1) = 1 ' \
+                    'ORDER BY ABS(c.id)'
+        else:
+            select_sql ='SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
                     'FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id ' \
                     'WHERE SUBSTRING_INDEX(q.q_id, "_", 1) = 1 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 3 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 4 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 5 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 18 ' \
                     'ORDER BY ABS(c.id)'
         self.cur.execute(select_sql)
-        print(datetime.datetime.now(), "1")
+        logger.info("Selected")
 
         select_data = self.cur.fetchall()
         select_data1 = []
@@ -57,7 +68,7 @@ class SquadDb():
             elif "-2" in sd[4]:
                 select_data2.append(sd)
         temp_list = [[] for _ in range(len(select_data1))]
-        print (len(select_data1))
+        logger.info(len(select_data1))
 
         for s1, i in zip(select_data1, range(len(select_data1))):
             rm_ori = s1[2].replace("|"*5, "").replace("$"*5, "").replace("@"*5, "")
@@ -83,24 +94,22 @@ class SquadDb():
                 self.f2.write("".join(str(t)))
                 self.f2.write("\t")
             self.f2.write("\n")
-        print(datetime.datetime.now(), "2")
+        logger.info("Finish")
 
     def count_data(self):
-        print ('count start')
+        logger.info("count start")
         try:
             count_sql = 'select count(*) from SQUAD_KO_WIKI.all_qna'
             self.cur.execute(count_sql)
             select_count_row = self.cur.fetchall()
-            print (select_count_row)
+            logger.info(select_count_row)
             self.con.commit()
 
         except:
-            print ("cannnot user_information")
+            logger.info("cannnot user_information")
 
 
 if __name__ == "__main__":
     j = SquadDb()
     j.connect_db()
     j.select_data4()
-    # j.count_data()
-    # logger.info("All finished")
