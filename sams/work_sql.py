@@ -2,6 +2,8 @@ import os, sys
 import pymysql
 import logging
 import ys_logger
+import work_sql_ut as yu
+import re
 
 sys.path.append(os.path.abspath('..'))
 
@@ -25,7 +27,7 @@ class SquadDb():
         self.question_1 = ""
         self.question_2 = ""
         self.result_list = []
-        self.test = True
+        self.test = False
 
     def easy_mysql(self, cfg_dict, encoding='utf8', autocommit=False):
         self.con = pymysql.connect(host=cfg_dict['host'], user=cfg_dict['usr'],
@@ -35,15 +37,18 @@ class SquadDb():
             self.con.autocommit(True)
 
     def connect_db(self):
-        try:        # try to connect to project db
+        try:  # try to connect to project db
             cfg_dict = dict(host=self.db_cnf_dict['host'], usr=self.db_cnf_dict['usr'],
                             pwd=self.db_cnf_dict['pwd'], db=self.db_cnf_dict['db'])
-            self.easy_mysql(cfg_dict, encoding=self.db_cnf_dict['encoding'], autocommit=True)     # turn-on autocummit, be careful!
+            self.easy_mysql(cfg_dict, encoding=self.db_cnf_dict['encoding'],
+                            autocommit=True)  # turn-on autocummit, be careful!
             self.cur.execute("SET NAMES utf8")
         except Exception as e:
             pass
 
     def select_data4(self):
+        self.f2.write("\t".join(["c_id", "title", "context_ori", "context_con", "q_id-1", "q-1", "answer", "q_start", "len_answer", "rm_context", "con_start", "ex_answer",
+                                 "q_id-2", "q-2", "m_context", "m_ex_answer", "\n"]))
         logger.info("Start Selection")
         if self.test is True:
             select_sql = 'SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
@@ -63,23 +68,25 @@ class SquadDb():
         select_data2 = []
 
         for sd in select_data:
-            if "-1" in sd[4]:
+            if "-1" in sd[4]:  # q.q_id
                 select_data1.append(sd)
-            elif "-2" in sd[4]:
+            elif "-2" in sd[4]: # q.q_id
                 select_data2.append(sd)
         temp_list = [[] for _ in range(len(select_data1))]
         logger.info(len(select_data1))
 
         for s1, i in zip(select_data1, range(len(select_data1))):
-            rm_ori = s1[2].replace("|"*5, "").replace("$"*5, "").replace("@"*5, "")
-            context_start = rm_ori.find(str(s1[3]))
+            rm_ori = s1[2].replace("|"*5, "").replace("$"*5, "").replace("@"*5, "")  # c.context as context_ori
+            context_start = rm_ori.find(str(s1[3]))  # cc.context as context_con
 
             for s in s1:
                 temp_list[i].append(s)
             temp_list[i].append(rm_ori)
             temp_list[i].append(context_start)
             if context_start != -1:
-                temp_list[i].append(rm_ori[int(s1[7])+int(context_start): int(s1[7])+int(context_start)+int(s1[8])])
+                extract_answer = rm_ori[int(s1[7])+int(context_start): int(s1[7])+int(context_start)+int(s1[8])]
+                temp_list[i].append(rm_ori[int(s1[7])+int(context_start): int(s1[7])+int(context_start)+int(s1[8])])  # extract_answer
+
             else:
                 temp_list[i].append("null")
 
@@ -90,11 +97,29 @@ class SquadDb():
                     temp_list[i].append(str(s2[4]))
                     temp_list[i].append(str(s2[5]))
         for t_list in temp_list:
-            for t in t_list:
-                self.f2.write("".join(str(t)))
-                self.f2.write("\t")
-            self.f2.write("\n")
+            if len(t_list) ==14:
+                if t_list[6] == t_list[11] and t_list[12] !="":
+                    m_context = yu.insert_str(string=t_list[9], s_index=int(t_list[7])+int(t_list[10]), e_index=int(t_list[7]+int(t_list[8])+int(t_list[10])))
+                    t_list.append(m_context)
+                    a = yu.regu(m_context)
+                    t_list.append(a)
+                    if t_list[6] == t_list[11] == a:
+                        al = "all same"
+                    else:
+                        al = "diff"
+                    t_list.append(al)
+
+                    for t in t_list:
+                        self.f2.write("".join(str(t)))
+                        self.f2.write("\t")
+                    # self.f2.write(m_context)
+                    # self.f2.write("\t")
+                    # self.f2.write(a)
+                    # self.f2.write("\t")
+                    # self.f2.write(all)
+                    self.f2.write("\n")
         logger.info("Finish")
+
 
     def count_data(self):
         logger.info("count start")
@@ -111,5 +136,5 @@ class SquadDb():
 
 if __name__ == "__main__":
     j = SquadDb()
-    j.connect_db()
+    # j.connect_db()
     j.select_data4()

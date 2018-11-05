@@ -1,18 +1,16 @@
-import logging
-import logging.config
-import json
-import os
+answer = "안녕"
+marker = "|"
+context = "여러분|||||안녕|||||하세요"
 
-# DEBUG < INFO << WARNING < ERROR < CRITICAL
+if "{}{}{}".format(marker*5, answer, marker*5) in context:
+    print ("-")
 
-if __name__ == '__main__':
+import re
+p = re.compile(r"[|]{5}(.*)[|]{5}")
+def regu (c):
+    m = p.search(c)
+    return m.group(1)
 
-    with open('logger.json', 'rt') as f:
-        config = json.load(f)
-
-    logging.config.dictConfig(config)
-
-    logger = logging.getLogger("my_module")
-    logger.error("error test!!!")
-    logger.info("info test!!!")
-    logger.debug("debug test!!!")
+if __name__ == "__main__":
+    context = "여러분|||||안녕|||||하세요"
+    a = regu(context)

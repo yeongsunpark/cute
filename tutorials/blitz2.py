@@ -147,3 +147,14 @@ with torch.no_grad():
 for i in range(10):
     print ('Accuracy of %5s : %2d %%' %(
         classes[i], 100 * class_correct[i] / class_total[i]))
+
+
+
+# GPU 에서 학습하기 (신경망을 GPU 로 옮기기)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  # CUDA 를 사용할 수 있는 경우 첫 번 째 CUDA 장치를 사용하도로 ㄱ설정
+print (device)
+
+net.to(device)  # 재귀적으로 모든 모듈로 가서 매개변수와 버퍼를 CUDA tensor 로 변경
+inputs, labels = inputs.to(device), labels.to(device)  # 모든 단계에서 입력과 정답도 GPU 로 보냄
+
+
