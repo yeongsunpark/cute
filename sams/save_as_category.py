@@ -43,11 +43,14 @@ with open("rm_dupli_rows.txt", "r") as f1:
             logger.error("NO CATEGORY")
             break
 
-
-# with open("science.txt", "w") as f2:
-    # for l in science:
+"""
+with open("science.txt", "w") as f2:
+    for l in science:
+        item = l.split("\t")
         # f2.write(l)
-
+        f2.write("\t".join([item[0], item[1]]))
+        f2.write("\n")
+"""
 
 category_list = [science, society, sports, general, economy, ent]
 str_category_list = ["science", "society", "sports", "general", "economy", "ent"]
@@ -55,4 +58,7 @@ str_category_list = ["science", "society", "sports", "general", "economy", "ent"
 for cl1, cl2 in zip(category_list, str_category_list):
     with open("{}.txt".format(cl2), "w") as f2:
         for l in cl1:
-            f2.write(l)
+            item = l.split("\t")
+            # c_id, title, context(marker), q_id_1, question_1, q_id_2, question_2, answer
+            f2.write("\t".join([item[0], item[1], item[14], item[4], item[5], item[12], item[13], item[6]]))
+            f2.write("\n")
