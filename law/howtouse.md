@@ -1,4 +1,4 @@
-<코드 설명>
+`코드 설명`
 
 prepare: law_parser.json: 필요한 파일의 경로를 적음.
 
