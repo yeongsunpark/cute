@@ -10,6 +10,13 @@ logger.info("Finish setting logger")
 
 header = True
 c = dict()
+science = []
+society = []
+sports = []
+general = []
+economy = []
+ent = []
+
 with open("rm_dupli_rows.txt", "r") as f1:
     for line1 in f1:
         if header:
