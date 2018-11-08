@@ -11,7 +11,9 @@ def is_prime(n):
         return False
     if n < 9:
         return True
+
     k, l = 5, n ** 0.5
+
     while k <= l:
         if n % k is 0 or n % (k+2) is 0:
             return False

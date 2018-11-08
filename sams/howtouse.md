@@ -16,6 +16,8 @@ count_category 는 카테고리 가져와서 세는 파일. q_id 가 "1_c3_ent_0
 
 save_as_category.py 는 카테고리 별로 txt 파일 저장해주는 코드.
 
+final_tsv.py 는 카테고리 별로 된 txt 파일을 조금 수정해 주는 코드. q_id 를 없애고 1부터 차례로 채워줌.
+
 <사용 안 하는 코드>
 
 squad2tsv.py json 파일을 tsv 로 바꿔주는 코드. <- 이 코드 사용 안 하고 서버에서 바로 꺼내오기로 수정됨.

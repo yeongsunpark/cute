@@ -35,8 +35,8 @@ f1.close()
 logger.info("Finish load f1")
 
 
-f2 = open("not_dup_head.txt", "w")
-f3 = open("dup_head.txt", "w")
+f2 = open("not_dup_head_conc.txt", "w")
+f3 = open("dup_head_conc.txt", "w")
 
 
 with open("select3.txt", "r") as f:
@@ -64,3 +64,4 @@ with open("select3.txt", "r") as f:
 
 f2.close()
 f3.close()
+logger.info("Finish All")
