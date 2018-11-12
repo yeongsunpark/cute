@@ -1,5 +1,3 @@
-q_id = "1_c3_ent_01-1"
+c = """안녕하세요? 저는 마인즈랩의 박영선입니다."""
 
-q_id = q_id.split("_")[2]
-
-print (q_id)
+print (len(c))
