@@ -8,7 +8,9 @@ work_sql_ut.py 는 work_sql.py 에 사용하는 도구들. insert_str 과 regu �
 
 rm_dupli.py 는 a 파일과 b 파일을 비교하여서 특정 부분이 같으면 x 파일에, 다르면 y 파일에 저장하는 코드. (초기 연습용)
 
-check_dupli.py 는 a 파일과 b 파일을 비교해서 특정 부분이 같으면 x 파일에, 다르면 y 파일에 저장하는 코드. 이거 사용함.
+check_dupli.py 는 a 파일과 b 파일을 비교해서 특정 부분이 같으면 x 파일에, 다르면 y 파일에 저장하는 코드. 이거 사용함. (이제 안 씀)
+
+check_dupli_conc2.py 는 위와 똑같은 기능을 멀티프로세서 쓴 거.
 
 rm_dupli_rows.py 는 엑셀의 중복 제거 같은 기능. 나중에 멀티프로세서 써서 속도 높일 예정.
 
