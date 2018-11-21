@@ -77,7 +77,7 @@ class SquadDb():
 
         for s1, i in zip(select_data1, range(len(select_data1))):
             rm_ori = s1[2].replace("|"*5, "").replace("$"*5, "").replace("@"*5, "")  # c.context as context_ori
-            context_start = rm_ori.find(str(s1[3]))  # cc.context as context_con
+            context_start = rm_ori.find(str(s1[3]))  # cc.context as context_con (short version context)
 
             for s in s1:
                 temp_list[i].append(s)

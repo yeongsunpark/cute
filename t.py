@@ -1,3 +1,11 @@
-c = """안녕하세요? 저는 마인즈랩의 박영선입니다."""
+# -*- coding: utf-8 -*-
 
-print (len(c))
+nums = [0, 1, 2, 3, 4]
+"""
+squares = []
+for x in nums:
+    squares.append(x ** 2)
+print squares   # 출력 [0, 1, 4, 9, 16]
+"""
+squares = [x**2 for x in nums if x%2 ==0]
+print (squares)
