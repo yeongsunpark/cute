@@ -21,7 +21,7 @@ class SquadDb():
         self.con = None
         self.cur = None
         self.connect_db()
-        self.f2 = open("select3.txt", "w", newline="")
+        self.f2 = open("select4.txt", "w", newline="")
         self.q_id_1 = ""
         self.q_id_2 = ""
         self.question_1 = ""
@@ -60,6 +60,10 @@ class SquadDb():
                     'FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id ' \
                     'WHERE SUBSTRING_INDEX(q.q_id, "_", 1) = 1 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 3 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 4 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 5 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 18 ' \
                     'ORDER BY ABS(c.id)'
+        select_sql = 'SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
+                     'FROM YS_UPDATE_EXERCISE.all_qna AS q INNER JOIN YS_UPDATE_EXERCISE.all_context_ori AS c ON q.c_id = c.id INNER JOIN YS_UPDATE_EXERCISE.all_context AS cc ON q.c_id = cc.id ' \
+                     'WHERE q_id like "21_m3%" ' \
+                     'ORDER BY ABS(c.id)'
         self.cur.execute(select_sql)
         logger.info("Selected")
 

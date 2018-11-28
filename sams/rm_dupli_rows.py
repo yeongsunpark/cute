@@ -8,11 +8,11 @@ logger.setLevel("INFO")
 logger.addHandler(ys_logger.MyHandler())
 logger.info("Finish setting logger")
 
-f2 = open("rm_dupli_rows.txt", "w")
-f3 = open("dupli_rows.txt", "w")
+f2 = open("rm_dupli_rows4.txt", "w")
+f3 = open("dupli_rows4.txt", "w")
 
 lst = []
-with open("not_dup_head.txt", "r") as f1:
+with open("not_dup_head_conc4.txt", "r") as f1:
     for line1 in f1:
         item = line1.replace("\n","").split("\t")
         q_1 = item[5]

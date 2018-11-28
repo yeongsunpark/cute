@@ -8,7 +8,7 @@ logger.setLevel("INFO")
 logger.addHandler(ys_logger.MyHandler())
 logger.info("Finish setting logger")
 
-input_dir = "/home/msl/ys/cute/sams/fortsv"
+input_dir = "/home/msl/ys/cute/sams/tmp/data2"
 
 
 for f in os.listdir(input_dir):

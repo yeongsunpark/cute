@@ -17,7 +17,7 @@ general = []
 economy = []
 ent = []
 
-with open("rm_dupli_rows.txt", "r") as f1:
+with open("not_dup_head_conc4.txt", "r") as f1:
     for line1 in f1:
         if header:
             header = False
