@@ -1,6 +1,7 @@
 import os, sys
 import logging
 import ys_logger
+import json
 
 sys.path.append(os.path.abspath('..'))
 logger = logging.getLogger('root')
@@ -17,7 +18,22 @@ general = []
 economy = []
 ent = []
 
-with open("rm_dupli_rows4.txt", "r") as f1:
+json_data = open("work_sql.json", "r")
+j = json_data.read()
+j = json.loads(j)
+clean = j['RM_DUP_ROW']['f4']  # rm_dupli_rows.py 한 후 깨끗한 데이터
+final_dir = j['SAVE_AS']['final_dir']
+
+try:
+    if not(os.path.isdir(final_dir)):
+        os.makedirs(os.path.join(final_dir))
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        print("Failed to create directory!!!!!")
+        raise
+
+
+with open(clean, "r") as f1:
     for line1 in f1:
         if header:
             header = False
@@ -56,7 +72,8 @@ category_list = [science, society, sports, general, economy, ent]
 str_category_list = ["science", "society", "sports", "general", "economy", "ent"]
 
 for cl1, cl2 in zip(category_list, str_category_list):
-    with open("{}.txt".format(cl2), "w") as f2:
+    with open(os.path.join(final_dir, "{}.txt".format(cl2)), 'w', encoding='utf8') as f2:
+    # with open("{}.txt".format(cl2), "w") as f2:
         for l in cl1:
             item = l.split("\t")
             # c_id, title, context(marker), q_id_1, question_1, q_id_2, question_2, answer

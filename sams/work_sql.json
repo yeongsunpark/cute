@@ -1,0 +1,24 @@
+{
+  "TEST": {
+    "QUERY" :"SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id WHERE SUBSTRING_INDEX(q.q_id, '_', 1) = 1 ORDER BY ABS(c.id)",
+    "f":"select_test.txt"
+  },
+  "DEFAULT":{
+    "QUERY" :"SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id WHERE SUBSTRING_INDEX(q.q_id, '_', 1) = 1 OR SUBSTRING_INDEX(q.q_id, '_', 1) = 3 OR SUBSTRING_INDEX(q.q_id, '_', 1) = 4 OR SUBSTRING_INDEX(q.q_id, '_', 1) = 5 OR SUBSTRING_INDEX(q.q_id, '_', 1) = 18 ORDER BY ABS(c.id)",
+    "f:":"select_5.txt"
+  },
+  "CHE_DUP_CON2": {
+    "#####f1":"f1은 예전에 줬던 데이터(ID-TITLE-CONTENT-질문번호-질문-유사질문-답변-마커-최종검토)",
+    "#####f2f3": "f2는 안 중복 된 거 여기에 저장, f3은 중복된 거 여기에 저장 (c_id-title-context_ori-context_con-q_id-1-q-1-answer-q_start-len_answer-rm_context-con_start-ex_answer-q_id-2-q-2-m_context-m_ex_answer)",
+    "f1":"delivered_data/sum.tsv",
+    "f2":"not_dup_head_conc4.txt",
+    "f3":"dup_head_conc4.txt"
+  },
+  "RM_DUP_ROW":{
+    "f4":"rm_dupli_rows4.txt",
+    "f5":"dupli_rows4.txt"
+  },
+  "SAVE_AS": {
+    "final_dir":"/home/msl/ys/cute/sams/tmp/data3"
+  }
+}

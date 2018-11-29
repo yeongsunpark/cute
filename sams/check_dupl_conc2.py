@@ -2,6 +2,7 @@ import os, sys
 import logging
 import concurrent.futures
 import ys_logger
+import json
 
 sys.path.append(os.path.abspath('..'))
 logger = logging.getLogger('root')
@@ -10,9 +11,14 @@ logger.addHandler(ys_logger.MyHandler())
 logger.info("Finish setting logger")
 
 
-f1 = open("delivered_data/sum.tsv", "r")    # 예전에 줬던 데이터
-f2 = open("not_dup_head_conc4.txt", "w")    # 안 중복된 거 여기에 저장
-f3 = open("dup_head_conc4.txt", "w")    # 중복된 거 여기에 젖아 < 0확인용
+json_data = open("work_sql.json", "r")
+j = json_data.read()
+j = json.loads(j)
+
+f1 = open(j['CHE_DUP_CON2']['f1'], "r")  # 예전에 줬던 데이터  # "delivered_data/sum.tsv"
+f2 = open(j['CHE_DUP_CON2']['f2'], "w")  # 안 중복된 데이터  # "not_dup_head_conc4.txt"
+f3 = open(j['CHE_DUP_CON2']['f3'], "w")  # 중복된 데이터  # "dup_head_conc4.txt"
+select =  j['TEST']['f2']  # work_sql 의 결과로 나온 데이터 # "select4.txt"
 lst = list()
 
 
@@ -55,7 +61,8 @@ def comp(lenf, n ,r):
 def main2():
     workers = 10
     r = 1000
-    with open("select4.txt", "r") as f:  #<-work_sql 하면 나오는 텍스트파일 
+    # with open("select4.txt", "r") as f:
+    with open(select, "r") as f:
         lenf = f.readlines()
         lenf = tuple(lenf)
         print(len(lenf))

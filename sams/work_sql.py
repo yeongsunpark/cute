@@ -4,6 +4,7 @@ import logging
 import ys_logger
 import work_sql_ut as yu
 import re
+import json
 
 sys.path.append(os.path.abspath('..'))
 
@@ -21,13 +22,16 @@ class SquadDb():
         self.con = None
         self.cur = None
         self.connect_db()
-        self.f2 = open("select4.txt", "w", newline="")
+        # self.f = open("select4.txt", "w", newline="")
+        self.json_data = open("work_sql.json","r")
+        self.d = self.json_data.read()
+        self.d = json.loads(self.d)
+        self.f = open(self.d['TEST']['f'], "w", newline="")
         self.q_id_1 = ""
         self.q_id_2 = ""
         self.question_1 = ""
         self.question_2 = ""
         self.result_list = []
-        self.test = False
 
     def easy_mysql(self, cfg_dict, encoding='utf8', autocommit=False):
         self.con = pymysql.connect(host=cfg_dict['host'], user=cfg_dict['usr'],
@@ -47,26 +51,15 @@ class SquadDb():
             pass
 
     def select_data4(self):
-        self.f2.write("\t".join(["c_id", "title", "context_ori", "context_con", "q_id-1", "q-1", "answer", "q_start", "len_answer", "rm_context", "con_start", "ex_answer",
+        self.f.write("\t".join(["c_id", "title", "context_ori", "context_con", "q_id-1", "q-1", "answer", "q_start", "len_answer", "rm_context", "con_start", "ex_answer",
                                  "q_id-2", "q-2", "m_context", "m_ex_answer", "\n"]))
         logger.info("Start Selection")
-        if self.test is True:
-            select_sql = 'SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
-                    'FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id ' \
-                    'WHERE SUBSTRING_INDEX(q.q_id, "_", 1) = 1 ' \
-                    'ORDER BY ABS(c.id)'
-        else:
-            select_sql ='SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
-                    'FROM SQUAD_KO_ORI.all_qna AS q INNER JOIN SQUAD_KO_ORI.all_context_ori AS c ON q.c_id = c.id INNER JOIN SQUAD_KO_ORI.all_context AS cc ON q.c_id = cc.id ' \
-                    'WHERE SUBSTRING_INDEX(q.q_id, "_", 1) = 1 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 3 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 4 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 5 OR SUBSTRING_INDEX(q.q_id, "_", 1) = 18 ' \
-                    'ORDER BY ABS(c.id)'
-        select_sql = 'SELECT c.id, c.title, c.context as context_ori, cc.context as context_con, q.q_id, q.question, q.answer, q.answer_start, CHAR_LENGTH(q.answer) ' \
-                     'FROM YS_UPDATE_EXERCISE.all_qna AS q INNER JOIN YS_UPDATE_EXERCISE.all_context_ori AS c ON q.c_id = c.id INNER JOIN YS_UPDATE_EXERCISE.all_context AS cc ON q.c_id = cc.id ' \
-                     'WHERE q_id like "21_m3%" ' \
-                     'ORDER BY ABS(c.id)'
-        self.cur.execute(select_sql)
-        logger.info("Selected")
 
+        select_sql = self.d['TEST']['QUERY']
+
+        self.cur.execute(select_sql)
+
+        logger.info("Selected")
         select_data = self.cur.fetchall()
         select_data1 = []
         select_data2 = []
@@ -114,14 +107,9 @@ class SquadDb():
                     t_list.append(al)
 
                     for t in t_list:
-                        self.f2.write("".join(str(t)))
-                        self.f2.write("\t")
-                    # self.f2.write(m_context)
-                    # self.f2.write("\t")
-                    # self.f2.write(a)
-                    # self.f2.write("\t")
-                    # self.f2.write(all)
-                    self.f2.write("\n")
+                        self.f.write("".join(str(t)))
+                        self.f.write("\t")
+                    self.f.write("\n")
         logger.info("Finish")
 
 

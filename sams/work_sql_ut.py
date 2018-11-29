@@ -1,4 +1,5 @@
 import re
+import pymysql
 
 def insert_str(string, s_index, e_index, str_to_insert="|||||"):
     return string[:s_index] + str_to_insert + string[s_index:e_index] + str_to_insert + string[e_index:]
