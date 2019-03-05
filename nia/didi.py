@@ -52,7 +52,3 @@ with open("cw18/20180406_gen4.txt", "r") as f:
 
 f = open("didi.json", "w")
 json.dump(result, f, ensure_ascii=False, indent=2)
-
-
-
-
