@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath('..'))
 # import custom_logger
 import csv
 
-
+NUM_USER = 40
 
 class SquadDb():
 
@@ -43,7 +43,7 @@ class SquadDb():
 
     def insert_data(self, max_category_id):
         print ('insert start')
-        f = open("/home/msl/ys/cute/nia/insert_test.txt", 'r')
+        f = open("/home/msl/ys/cute/nia/20190110_20190131.txt", 'r')
         data = csv.reader(f, delimiter='\t')
         data = list(data)
         # max_category_id = 613
@@ -53,10 +53,13 @@ class SquadDb():
             try:
                 insert_memo_sql = 'INSERT INTO DATA_CONTEXT_TB (category_id, text, morpheme, status, target_user_id) values(%s,%s,%s,%s, %s)'
                 category_id = max_c_id
-                text = data[i][1]
-                morpheme = data[i][2]
-                status = data[i][3]
-                target_user_id = data[i][4]
+                text = str(data[i][1]).strip('"')
+                # morpheme = data[i][2]  #test
+                morpheme = "test"
+                # status = data[i][3]  #RD
+                status = "RD"
+                target_user_id = 'user' + str(i%NUM_USER+1)  #user1-20
+
 
                 self.cur.execute(insert_memo_sql, (category_id, text, morpheme, status, target_user_id))
                 self.con.commit()
