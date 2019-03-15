@@ -7,3 +7,8 @@ def regu (c):
     p = re.compile(r"[|]{5}(.*)[|]{5}")
     m = p.search(c)
     return m.group(1)
+
+def regu3 (c):
+    p = re.compile(r"[|]{5}(.*)[|]{5}")
+    m = p.search(c)
+    return m.group(1)

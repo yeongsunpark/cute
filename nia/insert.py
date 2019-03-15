@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath('..'))
 # import custom_logger
 import csv
 
-NUM_USER = 40
+NUM_USER = 25
 
 class SquadDb():
 
@@ -43,7 +43,7 @@ class SquadDb():
 
     def insert_data(self, max_category_id):
         print ('insert start')
-        f = open("/home/msl/ys/cute/nia/20190110_20190131.txt", 'r')
+        f = open("/home/msl/ys/cute/nia/db_news/fin_jul2dec2.txt", 'r')
         data = csv.reader(f, delimiter='\t')
         data = list(data)
         # max_category_id = 613

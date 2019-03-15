@@ -117,7 +117,7 @@ class SquadDb():
                     m_context = yu.insert_str(string=t_list[9], s_index=int(t_list[7]) + int(t_list[10]),
                                               e_index=int(t_list[7] + int(t_list[8]) + int(t_list[10])))
                     t_list.append(m_context)
-                    a = yu.regu(m_context)
+                    a = yu.regu3(m_context)
                     t_list.append(a)
                     # if t_list[6] == t_list[11] == a:
                     # al = "all same"
