@@ -21,14 +21,16 @@ lst.sort(key=lambda x: x[1])
 print(lst)
 """
 result_list = list()
-f = open("/home/msl/ys/cute/nia/no_marker/normal_yeomjisun.tsv" ,"r")
+# f = open("/home/msl/ys/cute/nia/no_marker/normal_yeomjisun.tsv" ,"r")
+f = open("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호_correct.txt" ,"r")
 for line in f:
     line = line.replace("\n","")
     item = line.split("\t")
     result_list.append(item)
 # print (result_list)
 f.close()
-f2 = open("/home/msl/ys/cute/nia/modi_che/normal2_work-yjs.tsv", "r")
+# f2 = open("/home/msl/ys/cute/nia/modi_che/normal2_work-yjs.tsv", "r")
+f2 = open("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호_normal.txt", "r")
 for line in f2:
     line = line.replace("\n", "")
     item = line.split("\t")
@@ -36,7 +38,8 @@ for line in f2:
 
 result_list.sort(key=lambda x: int(x[2]))
 
-f3 = open("/home/msl/ys/cute/nia/modi_che/normal_finish-yeomjisun.tsv", "w")
+# f3 = open("/home/msl/ys/cute/nia/modi_che/normal_finish-yeomjisun.tsv", "w")
+f3 = open("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호_ascending.txt", "w")
 for rl in result_list:
     f3.write("\t".join(rl))
     f3.write("\n")

@@ -23,3 +23,11 @@ nia/a
 nia/*.json
 nia/db_news/
 nia/old/
+nia/common_tsv
+nia/data
+nia/modi_che
+nia/new
+nia/no_checker
+nia/no_marker
+nia/no_marker_bak
+nia/old
