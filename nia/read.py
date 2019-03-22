@@ -7,6 +7,7 @@ import re
 
 error_list = []
 normal_list = []
+wrong_list = []
 number = 0
 with open ("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호.txt") as f:
     for line in f:
@@ -41,9 +42,10 @@ with open ("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번�
             start = item[8]
             end = item[9]
             if start == '' or end == '':
+                wrong_list.append(item)
                 continue
             if plain_context[int(start):int(end)] != answer:
-                error_list.append([title, context, item[2], question, answer, item[5], item[6], plain_context, start, end])
+                error_list.append([title, context, item[2], question, answer, plain_context[int(start):int(end)], item[5], item[6], plain_context, start, end])
             elif plain_context[int(start):int(end)] == answer:
                 normal_list.append([title, context, item[2], question, answer, item[5], item[6], plain_context, start, end])
 
@@ -55,3 +57,7 @@ with open ("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번�
 with open ("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호_error.txt", "w") as f3:
     for el in error_list:
         f3.write("\t".join(el))
+
+with open ("/home/msl/ys/cute/nia/common_tsv/크웍18전달건_편집_질문번호_wrong.txt", "w") as f4:
+    for el in wrong_list:
+        f4.write("\t".join(el))
